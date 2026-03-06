@@ -1,0 +1,1 @@
+duckdb -f ./local_ducklake.sql

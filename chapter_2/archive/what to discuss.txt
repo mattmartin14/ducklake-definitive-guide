@@ -1,0 +1,6 @@
+what to cover;
+
+1. show how to create local ducklakes using a duckdb database to manage as well as postgres
+- use aws as the object store
+
+2. then show how to migrate up to aws aurora rds or motherduck ducklake
