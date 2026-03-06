@@ -1,4 +1,4 @@
-ATTACH 'ducklake:local_inst.ducklake' as my_ducklake;
+ATTACH 'ducklake:../section_2_importing_data/local_inst.ducklake' as my_ducklake;
 
 -- view before
 SELECT * 
@@ -19,3 +19,4 @@ MERGE INTO my_ducklake.cust_orders AS target
 -- view after
 SELECT * 
 FROM my_ducklake.cust_orders
+;

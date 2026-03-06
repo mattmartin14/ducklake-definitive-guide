@@ -1,4 +1,4 @@
-ATTACH 'ducklake:local_inst.ducklake' as my_ducklake;
+ATTACH 'ducklake:../section_2_importing_data/local_inst.ducklake' as my_ducklake;
 
 INSERT INTO my_ducklake.cust_orders
 VALUES (1004, '2024-01-04', 'C004');
