@@ -1,0 +1,1 @@
+psql -d postgres -c "DROP DATABASE IF EXISTS ducklake_v1;"
