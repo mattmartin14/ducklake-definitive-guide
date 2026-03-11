@@ -1,6 +1,7 @@
 
+set enable_external_file_cache=false;
 
-ATTACH OR REPLACE 'ducklake:postgres:dbname=ducklake_v1 host=localhost' AS wh
+ATTACH 'ducklake:postgres:dbname=ducklake_v1 host=localhost' AS wh
     (DATA_PATH concat(getenv('HOME'), '/dwpg1'));
 
 create or replace table wh.orders
@@ -14,3 +15,4 @@ select *
 from wh.orders
 ;
 
+CALL ducklake_flush_inlined_data('wh');
