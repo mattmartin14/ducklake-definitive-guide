@@ -1,0 +1,1 @@
+duckdb -f ./import_iceberg.sql
