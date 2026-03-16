@@ -1,6 +1,4 @@
 
-set enable_external_file_cache=false;
-
 ATTACH 'ducklake:postgres:dbname=ducklake_v1 host=localhost' AS wh
     (DATA_PATH concat(getenv('HOME'), '/dwpg1'));
 
@@ -15,4 +13,13 @@ select *
 from wh.orders
 ;
 
-CALL ducklake_flush_inlined_data('wh');
+
+-- if using s3:
+CREATE OR REPLACE SECRET aws_creds (TYPE S3, provider credential_chain);
+
+ATTACH OR REPLACE 'ducklake:postgres:dbname=ducklake_v1 host=localhost' AS wh
+    (DATA_PATH concat('s3://', getenv('AWS_BUCKET'), '/ducklake_pg'), OVERRIDE_DATA_PATH True); 
+
+INSERT INTO wh.orders VALUES (3, date '2024-05-06', 200);
+
+SELECT * FROM wh.orders;

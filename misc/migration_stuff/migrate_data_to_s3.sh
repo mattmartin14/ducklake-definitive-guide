@@ -30,13 +30,3 @@ duckdb <<SQL
 
     SELECT * FROM wh.orders;
 SQL
-
-duckdb <<SQL 
-
-    CREATE SECRET aws_creds (TYPE S3, provider credential_chain);
-
-    ATTACH 'ducklake:postgres:dbname=ducklake_v1 host=localhost' AS wh;
-
-    from __ducklake_metadata_wh.ducklake_metadata;
-
-SQL 
