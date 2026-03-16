@@ -1,1 +1,0 @@
-duckdb -f ./merge_statement.sql
