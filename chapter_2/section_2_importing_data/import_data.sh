@@ -1,1 +1,0 @@
-duckdb -f ./import_data.sql

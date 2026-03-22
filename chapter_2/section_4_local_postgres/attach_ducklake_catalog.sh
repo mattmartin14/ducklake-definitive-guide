@@ -1,1 +1,0 @@
-duckdb -f ./attach_ducklake_catalog_to_pg.sql
