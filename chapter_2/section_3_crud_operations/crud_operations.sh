@@ -1,1 +1,0 @@
-duckdb -f ./crud_operations.sql
