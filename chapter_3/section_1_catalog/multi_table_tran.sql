@@ -1,4 +1,9 @@
-ATTACH OR REPLACE 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH concat(getenv('HOME'), '/dw1'));
+
+-- clean up from previous runs
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "$HOME/dw1"
+
+ATTACH OR REPLACE 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH '~/dw1');
 
 BEGIN TRANSACTION;
 
