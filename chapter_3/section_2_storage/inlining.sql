@@ -4,7 +4,10 @@
 .shell rm -rf -- "$HOME/dw3"
 
 ATTACH 'ducklake:local_inst.ducklake' as my_ducklake 
-    (DATA_PATH getenv('HOME') || '/dw3', DATA_INLINING_ROW_LIMIT 3);
+(
+    DATA_PATH '~/dw3', 
+    DATA_INLINING_ROW_LIMIT 3
+);
 
 CREATE TABLE my_ducklake.test (id int);
 
