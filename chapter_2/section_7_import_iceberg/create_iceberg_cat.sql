@@ -5,9 +5,10 @@ ATTACH OR REPLACE '${aws_acct_nbr}' as iceberg_catalog (
     , ENDPOINT_TYPE 'GLUE'
 );
 
-CREATE TABLE iceberg_catalog.${glue_db_nm}.orders 
+
+CREATE TABLE iceberg_catalog.db3.orders 
 WITH (
-  'location' = '${iceberg_wh_path}/iceberg_orders'
+  'location' = concat('s3://',getenv('AWS_BUCKET'),'/iceberg_cat/iceberg_orders')
 )
 AS
 SELECT 1001 as order_id, DATE '2024-01-01' AS order_date, 'C001' AS customer_id, 250.0 as total_amount
@@ -15,9 +16,9 @@ UNION ALL
 SELECT 1002, DATE '2024-01-02', 'C002', 150
 ;
 
-CREATE TABLE iceberg_catalog.${glue_db_nm}.order_lines
+CREATE TABLE iceberg_catalog.db3.order_lines
 WITH (
-  'location' = '${iceberg_wh_path}/iceberg_order_lines'
+  'location' = concat('s3://',getenv('AWS_BUCKET'),'/iceberg_cat/iceberg_order_lines')
 )
 AS
 SELECT 1 as order_line_id, 1001 as order_id, 'P001' as product_id, 2 as quantity, 125.0 as line_total

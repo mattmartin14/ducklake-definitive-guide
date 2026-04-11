@@ -3,10 +3,9 @@ ATTACH OR REPLACE 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH conca
 INSTALL ICEBERG;
 LOAD ICEBERG;
 
-ATTACH '' AS iceberg_catalog (
-        TYPE 'iceberg'
-        , WAREHOUSE './icehouse'
-        , AUTHORIZATION_TYPE 'none'
+ATTACH OR REPLACE '${aws_acct_nbr}' as iceberg_catalog (
+      TYPE ICEBERG
+    , ENDPOINT_TYPE 'GLUE'
 );
 
 COPY FROM DATABASE iceberg_catalog TO my_ducklake;

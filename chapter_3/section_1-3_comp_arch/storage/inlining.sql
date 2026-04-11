@@ -1,11 +1,10 @@
 
 -- clean up from previous runs
-.shell rm -f -- "local_inst.ducklake"
-.shell rm -rf -- "$HOME/dw3"
+.shell rm -rf -- "local_inst.ducklake" "./ducklake_wh"
 
 ATTACH 'ducklake:local_inst.ducklake' as my_ducklake 
 (
-    DATA_PATH '~/dw3', 
+    DATA_PATH './ducklake_wh', 
     DATA_INLINING_ROW_LIMIT 3
 );
 
@@ -21,7 +20,7 @@ INSERT INTO my_ducklake.test VALUES (2), (3), (4), (5);
 SELECT * FROM my_ducklake.test order by id;
 
 .print 'only contains ids 2-5'
-SELECT * FROM read_parquet('~/dw3/main/test/*') order by id;
+SELECT * FROM read_parquet('./ducklake_wh/main/test/*') order by id;
 
 -- this flushes the single record
 CALL ducklake_flush_inlined_data('my_ducklake');
