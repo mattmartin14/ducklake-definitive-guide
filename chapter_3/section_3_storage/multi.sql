@@ -15,23 +15,25 @@ VALUES
     (5, '2024-01-05', 500.25)
 ;
 
+USE __ducklake_metadata_my_ducklake;
+
 .print 'After initial insert:'
 SELECT data_file_id, begin_snapshot, end_snapshot, path
-FROM __ducklake_metadata_my_ducklake.ducklake_data_file
+FROM ducklake_data_file
 ORDER BY data_file_id;
 
 UPDATE my_ducklake.orders SET amount = 50.25 WHERE ORDER_ID = 1;
 
 .print 'After update:'
 SELECT data_file_id, begin_snapshot, end_snapshot, path
-FROM __ducklake_metadata_my_ducklake.ducklake_data_file
+FROM ducklake_data_file
 ORDER BY data_file_id;
 
 DELETE FROM my_ducklake.orders WHERE order_id = 2;
 
 .print 'After delete:'
 SELECT data_file_id, begin_snapshot, end_snapshot, path
-FROM __ducklake_metadata_my_ducklake.ducklake_data_file
+FROM ducklake_data_file
 ORDER BY data_file_id;
 
 select * from my_ducklake.orders;

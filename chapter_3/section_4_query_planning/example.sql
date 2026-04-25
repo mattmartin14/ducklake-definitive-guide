@@ -4,7 +4,7 @@
 
 ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH './dw', DATA_INLINING_ROW_LIMIT 0);
 
-CREATE OR REPLACE TABLE my_ducklake.orders (order_id INTEGER, order_date TEXT, amount decimal(10, 2));
+CREATE OR REPLACE TABLE my_ducklake.orders (order_id INTEGER, order_date DATE, amount decimal(10, 2));
 
 INSERT INTO my_ducklake.orders (order_id, order_date, amount)
 VALUES 
@@ -15,7 +15,7 @@ VALUES
 
 USE __ducklake_metadata_my_ducklake;
 
---select * from information_schema.tables;
+select * from information_schema.tables;
 
 .print 'table stats e.g. count *';
 SELECT ts.record_count

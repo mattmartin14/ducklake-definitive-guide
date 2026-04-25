@@ -21,7 +21,7 @@ WHERE order_id = 1004;
 DELETE FROM my_ducklake.cust_orders
 WHERE order_id = 1003;
 
-SELECT '<< changes to the table >>' AS info;
+.print '<< changes to the table >>';
 
 -- View Table
 SELECT *
@@ -40,7 +40,7 @@ MERGE INTO my_ducklake.cust_orders AS target
     WHEN NOT MATCHED THEN INSERT BY NAME
 ;
 
-SELECT '<< after merge >>' AS info;
+.print '<< after merge >>'
 
 -- view changes to the table 
 SELECT *

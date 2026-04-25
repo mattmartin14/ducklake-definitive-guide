@@ -1,9 +1,9 @@
 
 -- clean up from previous runs
 .shell rm -f -- "local_inst.ducklake"
-.shell rm -rf -- "$HOME/dw1"
+.shell rm -rf -- "./dw1"
 
-ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH '~/dw1');
+ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH './dw1');
 
 BEGIN TRANSACTION;
 
