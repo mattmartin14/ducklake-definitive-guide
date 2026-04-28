@@ -15,7 +15,7 @@ VALUES
 
 USE __ducklake_metadata_my_ducklake;
 
-select * from information_schema.tables;
+--select * from information_schema.tables;
 
 .print 'table stats e.g. count *';
 SELECT ts.record_count
