@@ -1,6 +1,3 @@
-.shell rm -f -- "local_inst.ducklake"
-.shell rm -rf -- "./dw"
-
 /*
     Ducklake (as of April 2026) does not support merging with
      multiple WHEN MATCHED conditions
@@ -11,6 +8,9 @@
     also, does not support RETURNING clause to return what actions the merge statement took
 
 */
+
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "./dw"
 
 ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw');
 
