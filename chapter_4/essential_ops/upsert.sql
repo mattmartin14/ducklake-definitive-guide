@@ -8,6 +8,8 @@
      WHEN MATCHED and src.sls_amt <= 50 THEN DELETE 
      WHEN MATCHED and src.sls_amt > 50 THEN UPDATE
 
+    also, does not support RETURNING clause to return what actions the merge statement took
+
 */
 
 ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw');
