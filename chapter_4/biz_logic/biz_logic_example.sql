@@ -60,3 +60,5 @@ USE __ducklake_metadata_dw;
 
 FROM ducklake_tag;
 FROM ducklake_column_tag;
+
+.shell rm -rf -- "./dw"
