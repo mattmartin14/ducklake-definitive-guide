@@ -56,8 +56,6 @@ LIMIT 5;
 FROM dw.lineitem_shipmode_agg
 LIMIT 5;
 
---select * from information_schema.tables;
-
 USE __ducklake_metadata_dw;
 
 FROM ducklake_tag;
