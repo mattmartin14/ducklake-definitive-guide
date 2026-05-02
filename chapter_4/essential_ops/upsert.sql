@@ -42,7 +42,7 @@ MERGE INTO dl1.sales as tgt
         ON tgt.sls_id = src.sls_id
     WHEN MATCHED THEN UPDATE
         SET sls_dt = src.sls_dt, sls_amt = src.sls_amt
-    WHEN NOT MATCHED THEN 
+    WHEN NOT MATCHED BY TARGET THEN 
         INSERT (sls_id, sls_dt, sls_amt)
         VALUES (src.sls_id, src.sls_dt, src.sls_amt)
 ;
@@ -51,7 +51,7 @@ MERGE INTO dl1.sales as tgt
 MERGE INTO dl1.sales as tgt
     USING tmp_sales as src
         ON tgt.sls_id = src.sls_id
-    WHEN MATCHED THEN DELETE 
+    WHEN MATCHED AND src.sls_amt <= 50 THEN DELETE 
 ;
 
 
@@ -84,5 +84,14 @@ MERGE INTO dl1.sales as tgt
         ON tgt.sls_id = src.sls_id
     WHEN NOT MATCHED and src.sls_amt <= 50 THEN INSERT 
 ;
+
+-- multiple logical conditions:
+MERGE INTO dl1.sales as tgt
+    USING tmp_sales as src
+        ON tgt.sls_id = src.sls_id
+    WHEN MATCHED and src.sls_amt <= 50 THEN UPDATE 
+    WHEN NOT MATCHED and src.sls_amt >= 100 and src.sls_dt >= DATE '2025-01-01' THEN INSERT 
+;
+
 
 FROM dl1.sales;

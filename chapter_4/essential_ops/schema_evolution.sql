@@ -4,28 +4,28 @@
 ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw');
 
 CREATE OR REPLACE TABLE dl1.sales
-as
+AS
 SELECT 1 as sls_id, DATE '2025-01-01' as sls_dt, 200.05 as sls_amt
 UNION ALL
 SELECT 2, DATE '2025-03-04', 153.75;
 
 -- adding a column
-alter table dl1.sales add cust_id int;
+ALTER TABLE dl1.sales ADD cust_id INT DEFAULT -1;
 
 -- cannot change a data type to a smaller one
--- alter table dl1.sales alter cust_id set type smallint;
+-- ALTER TABLE dl1.sales ALTER cust_id SET TYPE SMALLINT;
 
 -- changing a data type to a larger one
-alter table dl1.sales alter cust_id set type bigint;
+ALTER TABLE dl1.sales ALTER cust_id SET TYPE BIGINT;
 
 -- renaming a table
-alter table dl1.sales rename to sales_dly;
+ALTER TABLE dl1.sales RENAME TO sales_dly;
 
 -- renaming a column
-alter table dl1.sales_dly rename cust_id to customer_id;
+ALTER TABLE dl1.sales_dly RENAME cust_id TO customer_id;
 
 -- drop a column
-alter table dl1.sales_dly drop customer_id;
+ALTER TABLE dl1.sales_dly DROP customer_id;
 
 -- view results
-from dl1.sales_dly;
+FROM dl1.sales_dly;
