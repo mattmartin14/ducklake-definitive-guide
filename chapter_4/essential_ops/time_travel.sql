@@ -11,10 +11,13 @@ SELECT 1 as sls_id, DATE '2025-01-01' as sls_dt, 200.05 as sls_amt
 UNION ALL
 SELECT 2, DATE '2025-03-04', 153.75;
 
-
+-- Note: the 0 day is there because this is ran as a single batch
+-- if you toggle it to 1 day or more, you will get an error because the snapshot doesn't exist
+-- in more realistic scenarios, you would have multiple batches and the snapshot from the previous batch would be available for querying in the next batch
+-- we are still including it here for demonstration purposes to show how you can query a snapshot from a specific point in time
 SELECT * 
 FROM dl1.sales
-    AT (TIMESTAMP => now() - INTERVAL '1 day');
+    AT (TIMESTAMP => now() - INTERVAL '0 day');
 
 FROM dl1.snapshots();
 
@@ -24,7 +27,7 @@ SELECT
   s.snapshot_id,
   s.snapshot_time,
   s.schema_version,
-  sc.* exclude snapshot_id
+  sc.* exclude (snapshot_id)
 FROM ducklake_snapshot s
 INNER JOIN ducklake_snapshot_changes sc
   		ON s.snapshot_id = sc.snapshot_id
