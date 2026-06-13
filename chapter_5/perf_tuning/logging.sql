@@ -1,0 +1,26 @@
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "./dw"
+.shell rm -rf -- "./query_logs"
+.shell mkdir -p "./query_logs"
+
+-- Enable query profiling in JSON mode (output file is set per-query below)
+PRAGMA enable_profiling = 'json';
+
+ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw', DATA_INLINING_ROW_LIMIT 0);
+
+USE dl1;
+
+create table sales_dly (sls_dt date, region_name varchar, sls_amt double);
+
+INSERT INTO sales_dly VALUES ('2025-01-01', 'North', 200.05);
+INSERT INTO sales_dly VALUES ('2025-01-02', 'North', 210);
+
+-- Query 1: full scan
+PRAGMA profiling_output = './query_logs/q1_full_scan.json';
+SELECT * FROM sales_dly;
+
+-- Query 2: filtered scan
+PRAGMA profiling_output = './query_logs/q2_filtered_scan.json';
+SELECT *
+FROM sales_dly
+WHERE sls_amt > 205;

@@ -1,0 +1,74 @@
+{
+    "total_memory_allocated": 0,
+    "total_bytes_written": 0,
+    "total_bytes_read": 0,
+    "system_peak_temp_dir_size": 0,
+    "system_peak_buffer_memory": 14934112,
+    "rows_returned": 1,
+    "result_set_size": 28,
+    "latency": 0.002101792,
+    "wal_replay_entry_count": 0,
+    "extra_info": {},
+    "commit_local_storage_latency": 0.0,
+    "attach_load_storage_latency": 0.0,
+    "query_name": "SELECT *\nFROM sales_dly\nWHERE sls_amt > 205;",
+    "cpu_time": 0.000062917,
+    "checkpoint_latency": 0.0,
+    "cumulative_cardinality": 2,
+    "waiting_to_attach_latency": 0.0,
+    "write_to_wal_latency": 0.0,
+    "attach_replay_wal_latency": 0.0,
+    "blocked_thread_time": 0.0,
+    "cumulative_rows_scanned": 24,
+    "children": [
+        {
+            "system_peak_temp_dir_size": 0,
+            "result_set_size": 28,
+            "operator_type": "PROJECTION",
+            "operator_timing": 5.83e-7,
+            "operator_rows_scanned": 0,
+            "extra_info": {
+                "Projections": [
+                    "sls_dt",
+                    "region_name",
+                    "sls_amt"
+                ],
+                "Estimated Cardinality": "1"
+            },
+            "system_peak_buffer_memory": 0,
+            "cumulative_rows_scanned": 24,
+            "cpu_time": 0.000057709,
+            "operator_name": "PROJECTION",
+            "cumulative_cardinality": 2,
+            "operator_cardinality": 1,
+            "children": [
+                {
+                    "cumulative_cardinality": 1,
+                    "operator_cardinality": 1,
+                    "cumulative_rows_scanned": 24,
+                    "operator_name": "DUCKLAKE_SCAN",
+                    "cpu_time": 0.000057126,
+                    "operator_rows_scanned": 24,
+                    "system_peak_buffer_memory": 0,
+                    "extra_info": {
+                        "Table": "sales_dly",
+                        "Projections": [
+                            "sls_amt",
+                            "sls_dt",
+                            "region_name"
+                        ],
+                        "Filters": "sls_amt>205.0",
+                        "Estimated Cardinality": "1",
+                        "Total Files Read": "1",
+                        "Filename(s)": "./dw/main/sales_dly/ducklake-019ec2d3-c765-7354-adcd-bd51f7d883a9.parquet"
+                    },
+                    "operator_timing": 0.000057126,
+                    "system_peak_temp_dir_size": 0,
+                    "result_set_size": 28,
+                    "operator_type": "TABLE_SCAN",
+                    "children": []
+                }
+            ]
+        }
+    ]
+}
