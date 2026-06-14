@@ -1,0 +1,65 @@
+{
+    "total_memory_allocated": 0,
+    "total_bytes_written": 0,
+    "total_bytes_read": 0,
+    "system_peak_temp_dir_size": 0,
+    "system_peak_buffer_memory": 15895120,
+    "rows_returned": 4,
+    "result_set_size": 64,
+    "latency": 0.000917875,
+    "wal_replay_entry_count": 0,
+    "extra_info": {},
+    "commit_local_storage_latency": 0.0,
+    "attach_load_storage_latency": 0.0,
+    "query_name": "SELECT row_group_id, row_group_num_rows\nFROM parquet_metadata('./dw/main/sales_hdr/*.parquet');",
+    "cpu_time": 0.000072832,
+    "checkpoint_latency": 0.0,
+    "cumulative_cardinality": 8,
+    "waiting_to_attach_latency": 0.0,
+    "write_to_wal_latency": 0.0,
+    "attach_replay_wal_latency": 0.0,
+    "blocked_thread_time": 0.0,
+    "cumulative_rows_scanned": 0,
+    "children": [
+        {
+            "system_peak_temp_dir_size": 0,
+            "result_set_size": 64,
+            "operator_type": "PROJECTION",
+            "operator_timing": 3.75e-7,
+            "operator_rows_scanned": 0,
+            "extra_info": {
+                "Projections": [
+                    "#1",
+                    "#2"
+                ],
+                "Estimated Cardinality": "1"
+            },
+            "system_peak_buffer_memory": 0,
+            "cumulative_rows_scanned": 0,
+            "cpu_time": 0.00006904099999999999,
+            "operator_name": "PROJECTION",
+            "cumulative_cardinality": 8,
+            "operator_cardinality": 4,
+            "children": [
+                {
+                    "cumulative_cardinality": 4,
+                    "operator_cardinality": 4,
+                    "cumulative_rows_scanned": 0,
+                    "operator_name": "PARQUET_METADATA",
+                    "cpu_time": 0.000068666,
+                    "operator_rows_scanned": 0,
+                    "system_peak_buffer_memory": 0,
+                    "extra_info": {
+                        "Function": "PARQUET_METADATA",
+                        "Estimated Cardinality": "1"
+                    },
+                    "operator_timing": 0.000068666,
+                    "system_peak_temp_dir_size": 0,
+                    "result_set_size": 198120,
+                    "operator_type": "TABLE_SCAN",
+                    "children": []
+                }
+            ]
+        }
+    ]
+}
