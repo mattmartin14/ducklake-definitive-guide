@@ -1,134 +1,63 @@
 {
-    "total_memory_allocated": 262144,
+    "total_memory_allocated": 0,
     "total_bytes_written": 0,
-    "total_bytes_read": 450,
+    "total_bytes_read": 0,
     "system_peak_temp_dir_size": 0,
-    "system_peak_buffer_memory": 15276848,
-    "rows_returned": 1,
-    "result_set_size": 20,
-    "latency": 0.006043542,
+    "system_peak_buffer_memory": 15895120,
+    "rows_returned": 4,
+    "result_set_size": 64,
+    "latency": 0.002494958,
     "wal_replay_entry_count": 0,
     "extra_info": {},
     "commit_local_storage_latency": 0.0,
     "attach_load_storage_latency": 0.0,
-    "query_name": "SELECT hdr.sls_dt, sum(dtl.qty) as total_qty\nFROM sales_hdr as hdr\n    INNER JOIN sales_dtl as dtl\n        ON hdr.sls_id = dtl.sls_id\nWHERE hdr.sls_amt > 205\nGROUP BY hdr.sls_dt;",
-    "cpu_time": 0.000804131,
+    "query_name": "SELECT row_group_id, row_group_num_rows\nFROM parquet_metadata('./dw/main/sales_hdr/*.parquet');",
+    "cpu_time": 0.000087373,
     "checkpoint_latency": 0.0,
     "cumulative_cardinality": 8,
     "waiting_to_attach_latency": 0.0,
     "write_to_wal_latency": 0.0,
     "attach_replay_wal_latency": 0.0,
     "blocked_thread_time": 0.0,
-    "cumulative_rows_scanned": 72,
+    "cumulative_rows_scanned": 0,
     "children": [
         {
             "system_peak_temp_dir_size": 0,
-            "result_set_size": 20,
-            "operator_type": "PERFECT_HASH_GROUP_BY",
-            "operator_timing": 0.00022099999999999998,
+            "result_set_size": 64,
+            "operator_type": "PROJECTION",
+            "operator_timing": 4.58e-7,
             "operator_rows_scanned": 0,
             "extra_info": {
-                "Groups": "#0",
-                "Aggregates": "sum(#1)"
+                "Projections": [
+                    "#1",
+                    "#2"
+                ],
+                "Estimated Cardinality": "1"
             },
             "system_peak_buffer_memory": 0,
-            "cumulative_rows_scanned": 72,
-            "cpu_time": 0.000803214,
-            "operator_name": "PERFECT_HASH_GROUP_BY",
+            "cumulative_rows_scanned": 0,
+            "cpu_time": 0.00008354,
+            "operator_name": "PROJECTION",
             "cumulative_cardinality": 8,
-            "operator_cardinality": 1,
+            "operator_cardinality": 4,
             "children": [
                 {
-                    "cumulative_cardinality": 7,
-                    "operator_cardinality": 2,
-                    "cumulative_rows_scanned": 72,
-                    "operator_name": "PROJECTION",
-                    "cpu_time": 0.0005822140000000001,
+                    "cumulative_cardinality": 4,
+                    "operator_cardinality": 4,
+                    "cumulative_rows_scanned": 0,
+                    "operator_name": "PARQUET_METADATA",
+                    "cpu_time": 0.000083082,
                     "operator_rows_scanned": 0,
                     "system_peak_buffer_memory": 0,
                     "extra_info": {
-                        "Projections": [
-                            "sls_dt",
-                            "qty"
-                        ],
-                        "Estimated Cardinality": "2"
+                        "Function": "PARQUET_METADATA",
+                        "Estimated Cardinality": "1"
                     },
-                    "operator_timing": 1.67e-7,
+                    "operator_timing": 0.000083082,
                     "system_peak_temp_dir_size": 0,
-                    "result_set_size": 16,
-                    "operator_type": "PROJECTION",
-                    "children": [
-                        {
-                            "system_peak_temp_dir_size": 0,
-                            "result_set_size": 16,
-                            "operator_type": "HASH_JOIN",
-                            "operator_timing": 0.000232418,
-                            "operator_rows_scanned": 0,
-                            "extra_info": {
-                                "Join Type": "INNER",
-                                "Conditions": "sls_id = sls_id",
-                                "Estimated Cardinality": "2"
-                            },
-                            "system_peak_buffer_memory": 0,
-                            "cumulative_rows_scanned": 72,
-                            "cpu_time": 0.000582047,
-                            "operator_name": "HASH_JOIN",
-                            "cumulative_cardinality": 5,
-                            "operator_cardinality": 2,
-                            "children": [
-                                {
-                                    "cumulative_cardinality": 2,
-                                    "operator_cardinality": 2,
-                                    "cumulative_rows_scanned": 48,
-                                    "operator_name": "DUCKLAKE_SCAN",
-                                    "cpu_time": 0.000058460000000000006,
-                                    "operator_rows_scanned": 48,
-                                    "system_peak_buffer_memory": 0,
-                                    "extra_info": {
-                                        "Table": "sales_dtl",
-                                        "Projections": [
-                                            "sls_id",
-                                            "qty"
-                                        ],
-                                        "Estimated Cardinality": "4",
-                                        "Dynamic Filters": "sls_id=2",
-                                        "Total Files Read": "1",
-                                        "Filename(s)": "./dw/main/sales_dtl/ducklake-019ec37e-9fc1-7103-97df-d2da4fcf0cc3.parquet"
-                                    },
-                                    "operator_timing": 0.000058460000000000006,
-                                    "system_peak_temp_dir_size": 0,
-                                    "result_set_size": 16,
-                                    "operator_type": "TABLE_SCAN",
-                                    "children": []
-                                },
-                                {
-                                    "cumulative_cardinality": 1,
-                                    "operator_cardinality": 1,
-                                    "cumulative_rows_scanned": 24,
-                                    "operator_name": "DUCKLAKE_SCAN",
-                                    "cpu_time": 0.0002911690000000001,
-                                    "operator_rows_scanned": 24,
-                                    "system_peak_buffer_memory": 0,
-                                    "extra_info": {
-                                        "Table": "sales_hdr",
-                                        "Projections": [
-                                            "sls_id",
-                                            "sls_dt"
-                                        ],
-                                        "Filters": "sls_amt>205.0",
-                                        "Estimated Cardinality": "1",
-                                        "Total Files Read": "1",
-                                        "Filename(s)": "./dw/main/sales_hdr/ducklake-019ec37e-9fb4-73ef-81be-173dae70d47c.parquet"
-                                    },
-                                    "operator_timing": 0.0002911690000000001,
-                                    "system_peak_temp_dir_size": 0,
-                                    "result_set_size": 8,
-                                    "operator_type": "TABLE_SCAN",
-                                    "children": []
-                                }
-                            ]
-                        }
-                    ]
+                    "result_set_size": 198120,
+                    "operator_type": "TABLE_SCAN",
+                    "children": []
                 }
             ]
         }

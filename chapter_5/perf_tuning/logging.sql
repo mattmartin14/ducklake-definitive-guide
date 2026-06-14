@@ -32,3 +32,17 @@ FROM sales_hdr as hdr
         ON hdr.sls_id = dtl.sls_id
 WHERE hdr.sls_amt > 205
 GROUP BY hdr.sls_dt;
+
+.print 'running explain analyze';
+
+EXPLAIN
+SELECT hdr.sls_dt, sum(dtl.qty) as total_qty
+FROM sales_hdr as hdr
+    INNER JOIN sales_dtl as dtl
+        ON hdr.sls_id = dtl.sls_id
+WHERE hdr.sls_amt <= 205
+GROUP BY hdr.sls_dt;
+
+
+SELECT row_group_id, row_group_num_rows
+FROM parquet_metadata('./dw/main/sales_hdr/*.parquet');
