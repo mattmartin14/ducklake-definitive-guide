@@ -12,14 +12,12 @@ USE dl1;
 
 CREATE TABLE sales_hdr (sls_id int, sls_dt date, region_name varchar, sls_amt double);
 
-INSERT INTO sales_hdr VALUES (1, '2025-01-01', 'North', 200.05);
-INSERT INTO sales_hdr VALUES (2, '2025-01-02', 'North', 210);
+INSERT INTO sales_hdr VALUES 
+    (1, '2025-01-01', 'North', 200.05),
+    (2, '2025-01-02', 'North', 210);
 
 CREATE TABLE sales_dtl (sls_id int, item_id int, qty int);
-INSERT INTO sales_dtl VALUES (1, 101, 2);
-INSERT INTO sales_dtl VALUES (1, 102, 1);
-INSERT INTO sales_dtl VALUES (2, 101, 1);
-INSERT INTO sales_dtl VALUES (2, 103, 3);
+INSERT INTO sales_dtl VALUES (1, 101, 2), (1, 102, 1), (2, 101, 1), (2, 103, 3);
 
 
 -- Query 1: full scan
