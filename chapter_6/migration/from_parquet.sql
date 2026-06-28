@@ -3,7 +3,7 @@
 .shell rm -rf -- "./tpch"
 
 install tpch; load tpch;
-call dbgen(sf=1);
+call dbgen(sf=.001);
 
 .shell mkdir -p -- "./tpch"
 copy (from orders limit 5) to './tpch/orders.parquet';

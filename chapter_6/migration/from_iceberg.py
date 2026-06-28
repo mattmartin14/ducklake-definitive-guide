@@ -53,7 +53,7 @@ def create_iceberg_tables(database_name):
         );
     """)
     cn.execute("INSTALL tpch; LOAD tpch;")
-    cn.execute("CALL dbgen(sf=1);")
+    cn.execute("CALL dbgen(sf=.001);")
 
     # create 2 glue tables from tpch
     sql = f"""
