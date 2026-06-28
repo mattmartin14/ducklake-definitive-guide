@@ -8,3 +8,9 @@ venv/
 .terraform.lock.hcl
 *.parquet
 *.lineitem
+
+# DuckDB and DuckLake generated data artifacts
+my_duckdb
+my_duckdb-wal
+**/dw/
+chapter_6/migration/local_inst.ducklake

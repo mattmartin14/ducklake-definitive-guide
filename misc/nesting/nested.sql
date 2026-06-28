@@ -46,4 +46,4 @@ select column_name, data_type, is_nullable
 from information_schema.columns
 where table_schema = 'test'
   and table_name = 'sales_nested';
-.last
+--.last
