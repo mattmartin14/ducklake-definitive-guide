@@ -8,7 +8,7 @@
 install tpch; load tpch;
 call dbgen(sf=0.001);
 
-CREATE TABLE orders1 as select * from orders limit 5;
+CREATE TABLE orders1 as select * from orders;
 
 -- drop all TPCH base tables so only the 5-row sample is in my_duckdb
 DROP TABLE orders;
@@ -25,4 +25,4 @@ ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw', DATA_INLINING_RO
 
 COPY FROM DATABASE my_duckdb to dl1;
 
-SELECT * FROM dl1.orders1;
+SELECT * FROM dl1.orders1 limit 5;
