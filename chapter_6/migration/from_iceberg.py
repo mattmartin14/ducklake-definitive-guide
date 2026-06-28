@@ -3,6 +3,8 @@ import duckdb
 import os
 import shutil
 
+BUCKET_NAME = "ducklake-definitive-guide"
+
 def delete_ducklake():
     if os.path.exists("./local_inst.ducklake"):
         os.remove("./local_inst.ducklake")
@@ -36,10 +38,10 @@ def create_iceberg_tables(database_name):
     s3 = boto3.client('s3')
     for prefix in ['ice1/orders', 'ice1/lineitem']:
         paginator = s3.get_paginator('list_objects_v2')
-        for page in paginator.paginate(Bucket='ducklake-definitive-guide', Prefix=prefix):
+        for page in paginator.paginate(Bucket=BUCKET_NAME, Prefix=prefix):
             objects = [{'Key': obj['Key']} for obj in page.get('Contents', [])]
             if objects:
-                s3.delete_objects(Bucket='ducklake-definitive-guide', Delete={'Objects': objects})
+                s3.delete_objects(Bucket=BUCKET_NAME, Delete={'Objects': objects})
 
     cn = duckdb.connect()
     cn.execute("INSTALL iceberg; LOAD iceberg;")
@@ -59,7 +61,7 @@ def create_iceberg_tables(database_name):
     sql = f"""
     CREATE TABLE iceberg_datalake.{database_name}.orders 
         WITH (
-            location = 's3://ducklake-definitive-guide/ice1/orders'
+            location = 's3://{BUCKET_NAME}/ice1/orders'
         )
         AS SELECT * FROM orders LIMIT 5;
     """
@@ -68,7 +70,7 @@ def create_iceberg_tables(database_name):
     sql = f"""
     CREATE TABLE iceberg_datalake.{database_name}.lineitem
         WITH (
-            location = 's3://ducklake-definitive-guide/ice1/lineitem'
+            location = 's3://{BUCKET_NAME}/ice1/lineitem'
         )
         AS SELECT * FROM lineitem LIMIT 5;
     """
