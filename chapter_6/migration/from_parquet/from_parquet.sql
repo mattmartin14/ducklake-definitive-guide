@@ -14,17 +14,18 @@ ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw', DATA_INLINING_RO
 
 create schema dl1.tpch;
 
--- Method 1: just a straight copy
+-- Method 1: Full Migration
 create table dl1.tpch.orders as select * from './tpch/orders.parquet';
 create table dl1.tpch.lineitem as select * from './tpch/lineitem.parquet';
 
--- Method 2: add data files to existing tables
+-- Method 2: Shallow Migration
 drop table if exists dl1.tpch.orders;
 drop table if exists dl1.tpch.lineitem;
 
 create table dl1.tpch.orders as select * from './tpch/orders.parquet' where 1=0;
 create table dl1.tpch.lineitem as select * from './tpch/lineitem.parquet' where 1=0;
 
+-- register the data files with DuckLake
 CALL ducklake_add_data_files('dl1', 'orders', './tpch/orders.parquet', schema => 'tpch');
 CALL ducklake_add_data_files('dl1', 'lineitem', './tpch/lineitem.parquet', schema => 'tpch');
 

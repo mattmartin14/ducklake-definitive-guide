@@ -1,23 +1,28 @@
 import boto3
 import duckdb
 import os
-import shutil
+
+"""
+Generate Iceberg tables on AWS using DuckDB.
+
+This script performs the following steps:
+1. Drops and creates the specified Glue database.
+2. Cleans up existing Iceberg data in the specified S3 bucket.
+3. Sets up an Iceberg connection in DuckDB.
+4. Creates Iceberg tables (`orders` and `lineitem`) with sample data.
+
+Environment variables:
+- aws_acct_nbr: AWS account number for the Iceberg datalake.
+
+Dependencies:
+- boto3
+- duckdb
+"""
 
 AWS_ACCOUNT_NBR = os.getenv('aws_acct_nbr')
 GLUE_DATABASE = "iceberg_db"
 BUCKET_NAME = "ducklake-definitive-guide"
 ICEBERG_S3_PREFIX = "ice1"
-DUCKLAKE_FILE = "local_inst.ducklake"
-DUCKLAKE_DATA_PATH = "./dw"
-DUCKLAKE_DATABASE = "ducklake_cat"
-
-
-def delete_ducklake():
-    if os.path.exists(DUCKLAKE_FILE):
-        os.remove(DUCKLAKE_FILE)
-    if os.path.exists(DUCKLAKE_DATA_PATH):
-        shutil.rmtree(DUCKLAKE_DATA_PATH)
-
 
 def drop_glue_database_if_exists(database_name):
     client = boto3.client('glue')
@@ -45,12 +50,10 @@ def _clean_s3_iceberg_data(table_names):
                 s3.delete_objects(Bucket=BUCKET_NAME, Delete={'Objects': objects})
 
 
-def _setup_iceberg_connection(cn, load_ducklake=False):
+def _setup_iceberg_connection(cn):
     cn.execute("INSTALL iceberg; LOAD iceberg;")
     cn.execute("INSTALL aws; LOAD aws;")
     cn.execute("INSTALL httpfs; LOAD httpfs;")
-    if load_ducklake:
-        cn.execute("INSTALL ducklake; LOAD ducklake;")
     cn.execute("CREATE SECRET aws_data (TYPE S3, PROVIDER credential_chain);")
     cn.execute(f"""
         ATTACH '{AWS_ACCOUNT_NBR}' AS iceberg_datalake (
@@ -79,37 +82,11 @@ def create_iceberg_tables(database_name):
         """)
 
 
-def migrate_iceberg_to_ducklake(iceberg_database, ducklake_database):
-    with duckdb.connect() as cn:
-        _setup_iceberg_connection(cn, load_ducklake=True)
-        cn.execute(f"ATTACH 'ducklake:{DUCKLAKE_FILE}' AS dl1 (DATA_PATH '{DUCKLAKE_DATA_PATH}', DATA_INLINING_ROW_LIMIT 0);")
-        cn.execute(f"CREATE SCHEMA IF NOT EXISTS dl1.{ducklake_database};")
-
-        glue = boto3.client('glue')
-        for table in glue.get_tables(DatabaseName=iceberg_database)['TableList']:
-            table_name = table['Name']
-            print(f"Migrating table: {table_name}")
-            cn.execute(f"""
-                CREATE TABLE dl1.{ducklake_database}.{table_name}
-                AS SELECT * FROM iceberg_datalake.{iceberg_database}.{table_name};
-            """)
-            print(f"Table '{table_name}' migrated successfully.")
-
-def validate_ducklake_tables(ducklake_database):
-    with duckdb.connect() as cn:
-        cn.execute(f"ATTACH 'ducklake:{DUCKLAKE_FILE}' AS dl1 (DATA_PATH '{DUCKLAKE_DATA_PATH}', DATA_INLINING_ROW_LIMIT 0);")
-        for table_name in ["orders", "lineitem"]:
-            result = cn.execute(f"SELECT COUNT(*) FROM dl1.{ducklake_database}.{table_name};").fetchone()
-            print(f"Table '{table_name}' has {result[0]} rows in DuckLake.")
 
 def main():
-    delete_ducklake()
     drop_glue_database_if_exists(GLUE_DATABASE)
     create_glue_database(GLUE_DATABASE)
     create_iceberg_tables(GLUE_DATABASE)
-    migrate_iceberg_to_ducklake(GLUE_DATABASE, DUCKLAKE_DATABASE)
-    validate_ducklake_tables(DUCKLAKE_DATABASE)
-
-
+   
 if __name__ == "__main__":
     main()
