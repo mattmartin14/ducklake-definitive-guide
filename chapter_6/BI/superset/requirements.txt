@@ -1,0 +1,6 @@
+# DuckDB SQLAlchemy driver (connects Superset → DuckDB / DuckLake)
+duckdb>=1.2.0
+duckdb-engine>=0.13.0
+
+# PostgreSQL driver for Superset's own metadata database
+psycopg2-binary>=2.9.0
