@@ -4,6 +4,9 @@ LOAD httpfs;
 INSTALL iceberg;
 LOAD iceberg;
 
+INSTALL TPCH; LOAD TPCH;
+CALL dbgen(sf=0.001);
+
 CREATE OR REPLACE SECRET minio_secret (
     TYPE s3,
     PROVIDER config,
@@ -24,25 +27,27 @@ ATTACH 'demo' AS lk (
 
 CREATE SCHEMA IF NOT EXISTS lk.demo_ns;
 
-DROP TABLE IF EXISTS lk.demo_ns.sales;
+DROP TABLE IF EXISTS lk.demo_ns.orders;
+CREATE TABLE lk.demo_ns.orders AS SELECT * FROM orders;
+.print 'iceberg orders table created'
 
-CREATE TABLE lk.demo_ns.sales (
-    sale_id INTEGER,
-    customer_name VARCHAR,
-    sale_amount DECIMAL(10,2),
-    sale_ts TIMESTAMP
-);
 
-INSERT INTO lk.demo_ns.sales VALUES
-    (1, 'matt', 100.25, TIMESTAMP '2026-06-28 08:00:00'),
-    (2, 'jane', 225.50, TIMESTAMP '2026-06-28 09:00:00'),
-    (3, 'duck',  42.00, TIMESTAMP '2026-06-28 10:00:00');
+.print '-------------'
+.print 'migrating to ducklake'
 
-SELECT *
-FROM lk.demo_ns.sales
-ORDER BY sale_id;
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "./dw"
 
-SELECT
-    COUNT(*) AS row_count,
-    SUM(sale_amount) AS total_sales
-FROM lk.demo_ns.sales;
+ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw', DATA_INLINING_ROW_LIMIT 0);
+
+FROM lk.demo_ns.orders WHERE 1=0;
+
+COPY FROM DATABASE lk TO dl1;
+.print 'iceberg catalog migrated to ducklake'
+
+USE dl1;
+select * from dl1.demo_ns.orders limit 5;
+
+--select * from dl1.information_schema.tables;
+
+--select * from dl1.demo_ns.orders limit 5;
