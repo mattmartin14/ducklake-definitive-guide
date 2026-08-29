@@ -14,11 +14,12 @@ INSERT INTO dl1.sales_dly VALUES ('2025-01-04', 'North', 230.05);
 -- merge the files (compaction) (creates a new parquet file, maintains snapshot history)
 CALL ducklake_merge_adjacent_files('dl1');
 
--- expires the older files
+-- expires the older files with explicit call
 CALL ducklake_expire_snapshots('dl1', older_than => now() - INTERVAL '1 week');
 
 -- global setting to auto expire
 CALL dl1.set_option('expire_older_than', '1 month');
+CALL ducklake_expire_snapshots('dl1');
 
 -- removes the older/expired snapshot files
 CALL ducklake_cleanup_old_files('dl1', cleanup_all => true);
