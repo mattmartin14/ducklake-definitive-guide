@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node arrow_query.mjs"
+    "start": "node arrow_query.mjs",
+    "append": "node appender.mjs"
   },
   "dependencies": {
     "@duckdb/node-api": "latest",
