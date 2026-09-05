@@ -1,0 +1,12 @@
+{
+  "name": "ducklake-node-examples",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node arrow_query.mjs"
+  },
+  "dependencies": {
+    "@duckdb/node-api": "latest",
+    "apache-arrow": "latest"
+  }
+}

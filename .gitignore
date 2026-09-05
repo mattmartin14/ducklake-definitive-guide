@@ -14,3 +14,6 @@ my_duckdb
 my_duckdb-wal
 **/dw/
 chapter_6/migration/local_inst.ducklake
+**/node_modules/
+chapter_9/node_examples/*.ducklake
+chapter_9/node_examples/lake_data/
