@@ -66,10 +66,11 @@ export function initChart() {
     const type = typeEl.value;
 
     try {
+      const green = "#2e8b57";
       const mark =
         type === "line"
-          ? Plot.lineY(currentRows, { x, y, marker: "circle" })
-          : Plot.barY(currentRows, { x, y });
+          ? Plot.lineY(currentRows, { x, y, marker: "circle", stroke: green, fill: green })
+          : Plot.barY(currentRows, { x, y, fill: green, stroke: green });
 
       const chart = Plot.plot({
         width: 720,

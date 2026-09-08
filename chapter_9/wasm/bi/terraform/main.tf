@@ -28,11 +28,22 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# The DuckLake bucket already exists and is shared with other examples in
-# this book (other chapters/prefixes live in it too) -- read-only reference,
-# never created or destroyed by this module.
-data "aws_s3_bucket" "ducklake_data" {
-  bucket = var.ducklake_bucket_name
+resource "aws_s3_bucket" "ducklake_data" {
+  bucket        = var.ducklake_bucket_name
+  force_destroy = true
+
+  tags = merge(var.tags, {
+    Name = "${var.name}-ducklake-data"
+  })
+}
+
+resource "aws_s3_bucket_public_access_block" "ducklake_data" {
+  bucket = aws_s3_bucket.ducklake_data.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_security_group" "quack" {
@@ -91,8 +102,6 @@ resource "aws_iam_role" "quack" {
   })
 }
 
-# Scoped to the ducklake_prefix key prefix only -- other prefixes in this
-# shared bucket (other book chapters) stay untouched.
 resource "aws_iam_role_policy" "ducklake_data" {
   name_prefix = "${var.name}-ducklake-data-"
   role        = aws_iam_role.quack.id
@@ -102,14 +111,14 @@ resource "aws_iam_role_policy" "ducklake_data" {
     Statement = [{
       Effect   = "Allow"
       Action   = ["s3:ListBucket"]
-      Resource = [data.aws_s3_bucket.ducklake_data.arn]
+      Resource = [aws_s3_bucket.ducklake_data.arn]
       Condition = {
         StringLike = { "s3:prefix" = ["${var.ducklake_prefix}/*"] }
       }
       }, {
       Effect   = "Allow"
       Action   = ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"]
-      Resource = ["${data.aws_s3_bucket.ducklake_data.arn}/${var.ducklake_prefix}/*"]
+      Resource = ["${aws_s3_bucket.ducklake_data.arn}/${var.ducklake_prefix}/*"]
     }]
   })
 }

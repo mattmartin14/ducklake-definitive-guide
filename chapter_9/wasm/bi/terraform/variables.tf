@@ -38,8 +38,9 @@ variable "allowed_cidr_blocks" {
 }
 
 variable "ducklake_bucket_name" {
-  description = "Name of an EXISTING S3 bucket to store DuckLake Parquet data in. This bucket is not created or destroyed by Terraform -- only read via a data source -- since it is shared with other examples in this book."
+  description = "Name of the dedicated S3 bucket used for this demo's DuckLake Parquet data. Terraform creates and destroys this bucket along with the example."
   type        = string
+  default     = "ducklake-definitive-guide-wasm"
 }
 
 variable "ducklake_prefix" {
