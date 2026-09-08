@@ -1,0 +1,13 @@
+region_name,sls_order_id,sls_dt,item_name,item_quantity,item_total_amt
+Gulf Coast,GC-0001,2026-07-19,Gadget X,18,1619.82
+Gulf Coast,GC-0002,2026-03-24,Widget A,20,250.00
+Gulf Coast,GC-0003,2026-01-29,Bulk Supply Case,1,210.00
+Gulf Coast,GC-0004,2026-03-03,Service Plan - Pro,10,990.00
+Gulf Coast,GC-0005,2026-08-13,Widget A,8,100.00
+Gulf Coast,GC-0006,2026-07-07,Widget B,3,72.00
+Gulf Coast,GC-0007,2026-07-14,Bulk Supply Case,3,630.00
+Gulf Coast,GC-0008,2026-06-18,Gadget X,5,449.95
+Gulf Coast,GC-0009,2026-02-12,Bulk Supply Case,18,3780.00
+Gulf Coast,GC-0010,2026-08-12,Service Plan - Basic,17,663.00
+Gulf Coast,GC-0011,2026-08-26,Replacement Part Kit,7,131.25
+Gulf Coast,GC-0012,2026-04-13,Gadget Y,10,1499.90

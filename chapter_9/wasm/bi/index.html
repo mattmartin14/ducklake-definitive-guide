@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DuckDB-WASM + Quack + DuckLake Sales Portal</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="hero">
+        <h1>Regional Sales Portal</h1>
+        <p>
+          DuckDB-WASM running entirely in your browser, connected only to a
+          <strong>Quack</strong> endpoint (no DuckLake/S3 knowledge on the client)
+          fronting a DuckLake catalog on EC2.
+        </p>
+        <div id="status" class="status">Initializing...</div>
+      </header>
+
+      <section class="workbench-card">
+        <h2>SQL Workbench</h2>
+        <p class="workbench-hint">
+          Runs via <code>remote.query('...')</code> against the EC2-hosted DuckLake table
+          <code>dl1.sales_data</code>. Use Cmd/Ctrl+Enter to run.
+        </p>
+        <label for="workbench-editor" class="visually-hidden">SQL query</label>
+        <textarea id="workbench-editor" class="workbench-editor" spellcheck="false"></textarea>
+        <div class="actions">
+          <button id="workbench-run" type="button">Run Query</button>
+          <button id="workbench-clear" type="button" class="secondary">Clear</button>
+        </div>
+        <div id="workbench-status" class="workbench-status"></div>
+        <div id="workbench-results" class="workbench-results" aria-live="polite"></div>
+      </section>
+
+      <section class="chart-controls-card">
+        <h2>Plot Results</h2>
+        <div class="chart-controls">
+          <label>
+            X-Axis
+            <select id="chart-x" disabled></select>
+          </label>
+          <label>
+            Y-Axis
+            <select id="chart-y" disabled></select>
+          </label>
+          <label>
+            Chart Type
+            <select id="chart-type" disabled>
+              <option value="bar">Bar</option>
+              <option value="line">Line</option>
+            </select>
+          </label>
+          <button id="chart-plot" type="button" disabled>Plot</button>
+        </div>
+      </section>
+
+      <section class="chart-card">
+        <h2>Chart</h2>
+        <div id="chart-message" class="chart-message"></div>
+        <div id="chart-slot" class="chart-slot"></div>
+      </section>
+
+      <section class="upload-card">
+        <h2>Upload Regional Sales CSV</h2>
+        <p class="upload-hint">
+          Columns must match the template: <code>region_name, sls_order_id, sls_dt,
+          item_name, item_quantity, item_total_amt</code>. Parsed locally in the
+          browser, then inserted into <code>dl1.sales_data</code> over Quack.
+        </p>
+        <div class="actions">
+          <input id="upload-file" type="file" accept=".csv" />
+          <button id="upload-submit" type="button" disabled>Upload</button>
+        </div>
+        <div id="upload-status" class="upload-status"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

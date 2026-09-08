@@ -1,0 +1,41 @@
+region_name,sls_order_id,sls_dt,item_name,item_quantity,item_total_amt
+Northeast,N-0001,2026-07-09,Widget B,1,24.00
+Northeast,N-0002,2026-02-27,Service Plan - Basic,8,312.00
+Northeast,N-0003,2026-06-23,Gadget X,4,359.96
+Northeast,N-0004,2026-04-19,Widget B,19,456.00
+Northeast,N-0005,2026-01-24,Widget A,1,12.50
+Northeast,N-0006,2026-05-10,Gadget Y,8,1199.92
+Northeast,N-0007,2026-02-20,Widget A,18,225.00
+Northeast,N-0008,2026-04-25,Replacement Part Kit,8,150.00
+Northeast,N-0009,2026-07-14,Service Plan - Basic,1,39.00
+Northeast,N-0010,2026-03-29,Gadget X,14,1259.86
+Midwest,M-0001,2026-02-25,Service Plan - Basic,5,195.00
+Midwest,M-0002,2026-01-24,Service Plan - Pro,4,396.00
+Midwest,M-0003,2026-04-02,Replacement Part Kit,4,75.00
+Midwest,M-0004,2026-03-09,Service Plan - Pro,20,1980.00
+Midwest,M-0005,2026-05-18,Widget A,15,187.50
+Midwest,M-0006,2026-01-21,Widget B,13,312.00
+Midwest,M-0007,2026-08-15,Service Plan - Basic,20,780.00
+Midwest,M-0008,2026-02-19,Service Plan - Pro,19,1881.00
+Midwest,M-0009,2026-06-19,Widget B,2,48.00
+Midwest,M-0010,2026-01-21,Gadget Y,10,1499.90
+Southwest,S-0001,2026-04-08,Gadget Y,4,599.96
+Southwest,S-0002,2026-06-12,Service Plan - Basic,15,585.00
+Southwest,S-0003,2026-04-05,Service Plan - Pro,6,594.00
+Southwest,S-0004,2026-06-21,Service Plan - Pro,7,693.00
+Southwest,S-0005,2026-06-05,Service Plan - Basic,3,117.00
+Southwest,S-0006,2026-07-06,Gadget X,18,1619.82
+Southwest,S-0007,2026-04-29,Gadget Y,6,899.94
+Southwest,S-0008,2026-08-25,Replacement Part Kit,9,168.75
+Southwest,S-0009,2026-08-04,Gadget Y,11,1649.89
+Southwest,S-0010,2026-07-30,Widget A,8,100.00
+Southeast,S-0001,2026-04-13,Widget A,11,137.50
+Southeast,S-0002,2026-02-24,Service Plan - Basic,3,117.00
+Southeast,S-0003,2026-06-17,Service Plan - Pro,7,693.00
+Southeast,S-0004,2026-08-15,Bulk Supply Case,13,2730.00
+Southeast,S-0005,2026-03-09,Bulk Supply Case,5,1050.00
+Southeast,S-0006,2026-07-10,Gadget X,8,719.92
+Southeast,S-0007,2026-04-20,Service Plan - Basic,19,741.00
+Southeast,S-0008,2026-02-26,Replacement Part Kit,12,225.00
+Southeast,S-0009,2026-05-07,Gadget X,17,1529.83
+Southeast,S-0010,2026-08-09,Widget B,2,48.00

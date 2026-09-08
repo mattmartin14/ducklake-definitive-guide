@@ -1,0 +1,293 @@
+:root {
+  --bg: #f7f4ee;
+  --bg-accent: #e9ded0;
+  --surface: #ffffff;
+  --ink: #1f2a1f;
+  --ink-soft: #4c5950;
+  --line: #d7ccb9;
+  --brand: #2f6d53;
+  --brand-strong: #1f4f3d;
+  --danger: #9a1f27;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 20%, #fff4db 0%, rgba(255, 244, 219, 0.2) 30%),
+    radial-gradient(circle at 90% 0%, #d9f2e5 0%, rgba(217, 242, 229, 0.2) 28%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-accent) 100%);
+  min-height: 100vh;
+}
+
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(55, 41, 12, 0.08);
+  padding: 1rem 1.25rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "IBM Plex Serif", Georgia, serif;
+  font-size: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+}
+
+.hero p {
+  margin: 0.5rem 0 0;
+  color: var(--ink-soft);
+}
+
+.hero a {
+  color: var(--brand-strong);
+}
+
+.status {
+  margin-top: 0.75rem;
+  font-weight: 600;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.chart-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(55, 41, 12, 0.08);
+  padding: 1rem 1.25rem;
+}
+
+.chart-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.chart-slot {
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.chart-slot .message {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.viz-controls-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(55, 41, 12, 0.08);
+  padding: 1rem 1.25rem;
+}
+
+.viz-controls-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.05rem;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 1rem;
+}
+
+.viz-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.viz-controls select {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  font-size: 0.9rem;
+  background: #fcfbf8;
+  color: var(--ink);
+  min-width: 10rem;
+}
+
+.viz-controls button {
+  align-self: flex-end;
+}
+
+.viz-message {
+  margin-bottom: 0.6rem;
+  min-height: 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.viz-message.error {
+  color: var(--danger);
+}
+
+.viz-chart-slot {
+  min-height: 420px;
+}
+
+@media (max-width: 640px) {
+  .layout {
+    padding: 0.75rem;
+  }
+
+  .hero,
+  .chart-card,
+  .viz-controls-card {
+    border-radius: 10px;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.workbench-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(55, 41, 12, 0.08);
+  padding: 1rem 1.25rem;
+}
+
+.workbench-card h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.workbench-hint {
+  margin: 0.35rem 0 0.75rem;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.workbench-hint code {
+  background: #f4efe5;
+  border-radius: 4px;
+  padding: 0.1rem 0.3rem;
+}
+
+.workbench-editor {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.85rem;
+  font-family: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+  font-size: 0.92rem;
+  line-height: 1.4;
+  background: #fcfbf8;
+  color: var(--ink);
+}
+
+.actions {
+  margin-top: 0.75rem;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background: var(--brand);
+  color: #fff;
+}
+
+button:hover:not(:disabled) {
+  background: var(--brand-strong);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+button.secondary {
+  background: #d9cfbe;
+  color: #3e3b36;
+}
+
+.workbench-status {
+  margin-top: 0.6rem;
+  min-height: 1.1rem;
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.workbench-status.error {
+  color: var(--danger);
+}
+
+.workbench-results {
+  margin-top: 0.6rem;
+  max-height: 420px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.workbench-results table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.workbench-results th,
+.workbench-results td {
+  text-align: left;
+  border-bottom: 1px solid #ece7dd;
+  padding: 0.5rem 0.65rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.workbench-results th {
+  position: sticky;
+  top: 0;
+  background: #f4efe5;
+}
+
+.workbench-results .message {
+  margin: 0;
+  padding: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.workbench-results .error-message {
+  color: var(--danger);
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DuckDB-WASM + DuckLake + Mosaic TPC-H Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header class="hero">
+        <h1>TPC-H DuckLake Dashboard</h1>
+        <p>
+          DuckDB-WASM running entirely in your browser, attached to a
+          <strong>DuckLake</strong> catalog holding TPC-H tables
+          (scale factor 0.001), visualized with
+          <a href="https://idl.uw.edu/mosaic/" target="_blank" rel="noopener">Mosaic</a>.
+        </p>
+        <div id="status" class="status">Initializing...</div>
+      </header>
+
+      <section class="charts-grid">
+        <div class="chart-card">
+          <h2>Monthly Order Revenue</h2>
+          <div id="chart-revenue" class="chart-slot"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Revenue by Nation</h2>
+          <div id="chart-nation" class="chart-slot"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Orders by Priority</h2>
+          <div id="chart-priority" class="chart-slot"></div>
+        </div>
+        <div class="chart-card">
+          <h2>Line Item Quantity Distribution</h2>
+          <div id="chart-quantity" class="chart-slot"></div>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

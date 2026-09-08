@@ -19,3 +19,5 @@ chapter_9/node_examples/*.ducklake
 chapter_9/node_examples/lake_data/
 chapter_9/adbc_examples/*.ducklake
 chapter_9/adbc_examples/lake_data/
+chapter_9/wasm/bi/data/
+chapter_9/wasm/bi/terraform/terraform.tfvars

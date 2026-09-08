@@ -1,0 +1,13 @@
+region_name,sls_order_id,sls_dt,item_name,item_quantity,item_total_amt
+Pacific Northwest,PN-0001,2026-06-10,Widget B,5,120.00
+Pacific Northwest,PN-0002,2026-06-02,Gadget X,14,1259.86
+Pacific Northwest,PN-0003,2026-04-08,Widget B,13,312.00
+Pacific Northwest,PN-0004,2026-03-06,Bulk Supply Case,17,3570.00
+Pacific Northwest,PN-0005,2026-06-24,Widget A,4,50.00
+Pacific Northwest,PN-0006,2026-01-29,Service Plan - Basic,11,429.00
+Pacific Northwest,PN-0007,2026-02-10,Service Plan - Basic,14,546.00
+Pacific Northwest,PN-0008,2026-07-04,Bulk Supply Case,1,210.00
+Pacific Northwest,PN-0009,2026-07-15,Service Plan - Basic,17,663.00
+Pacific Northwest,PN-0010,2026-08-22,Gadget X,17,1529.83
+Pacific Northwest,PN-0011,2026-08-04,Widget B,10,240.00
+Pacific Northwest,PN-0012,2026-04-06,Gadget Y,5,749.95
