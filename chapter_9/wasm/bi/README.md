@@ -53,8 +53,9 @@ through the portal for everyone else to see.
 2. `make deploy` (runs `terraform apply`). Note the printed `quack_public_ip`.
 3. Wait ~1-2 minutes for cloud-init, then confirm: `ssh -i ~/.ssh/<key> ubuntu@<ip> 'systemctl is-active quack.service'`.
 4. `make generate-data` — writes `sample_data/` (template, seed data + INSERT SQL, two sample upload CSVs).
-5. `make tunnel-start` then `make seed-data` — pre-populates `dl1.sales_data` with ~40 dummy rows across 4 regions.
-6. `make start` — starts the tunnel (if not already) + static server, opens the browser.
+5. `make tunnel-start` — opens the SSH tunnel to the EC2 Quack server.
+6. `make seed-data` — pre-populates `dl1.sales_data` with ~40 dummy rows across 4 regions (the table is empty until you run this).
+7. `make start` — starts the tunnel (if not already) + static server, opens the browser.
 
 ## Try it
 
