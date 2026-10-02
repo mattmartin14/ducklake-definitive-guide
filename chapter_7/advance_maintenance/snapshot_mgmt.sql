@@ -45,7 +45,7 @@ SET VARIABLE versions_to_expire = (
     FROM keep k JOIN snaps s USING (snapshot_id), ref
     WHERE s.snapshot_time >= ref.cutoff_ts
   )
-  SELECT list(snapshot_id ORDER BY snapshot_id)
+  SELECT coalesce(list(snapshot_id ORDER BY snapshot_id), [NULL])
   FROM snaps
   WHERE snapshot_id NOT IN (SELECT snapshot_id FROM keep_after_age)
 );
