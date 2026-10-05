@@ -1,3 +1,10 @@
+/*
+    This script assumes the following:
+    1. You have a Google Cloud Storage bucket set up and have the bucket name under environment variable GCS_BUCKET.
+    2. You have Google Cloud HMAC Keys set up, and the environment variables GCS_KEY, and GCS_SECRET are set.
+    3. you have the gcloud CLI installed
+*/
+
 .shell rm -f -- "gcs_wh.ducklake"
 .shell gcloud storage rm --recursive "gs://$GCS_BUCKET/ducklake/**"
 
