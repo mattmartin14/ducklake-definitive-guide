@@ -1,6 +1,9 @@
-ATTACH OR REPLACE 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH concat(getenv('HOME'), '/dw1'));
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "./dw"
 
-CREATE OR REPLACE TABLE my_ducklake.orders
+ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH './dw');
+
+CREATE TABLE my_ducklake.orders
 AS
 SELECT 1 as order_id, DATE '2024-01-01' AS order_date, 100.0 AS amount
 UNION ALL
