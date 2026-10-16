@@ -1,4 +1,7 @@
-ATTACH OR REPLACE 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH concat(getenv('HOME'), '/dw1'));
+.shell rm -f -- "local_inst.ducklake"
+.shell rm -rf -- "./dw"
+
+ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH './dw');
 
 -- CTAS
 CREATE OR REPLACE TABLE my_ducklake.cust_orders
@@ -6,6 +9,8 @@ AS
 SELECT 1001 as order_id, DATE '2024-01-01' AS order_date, 'C001' AS customer_id
 UNION ALL
 SELECT 1002, DATE '2024-01-02', 'C002'
+UNION ALL
+SELECT 1003, DATE '2024-01-03', 'C003'
 ;
 
 -- INSERT INTO
@@ -28,8 +33,10 @@ SELECT *
 FROM my_ducklake.cust_orders;
 
 -- Merge setup (create a temp table with some updates and new records)
-CREATE OR REPLACE TABLE my_ducklake.tmp_orders AS
-SELECT order_id, date_add(order_date, INTERVAL '1 day') AS order_date, customer_id
+CREATE TABLE my_ducklake.tmp_orders AS
+SELECT order_id
+    , date_add(order_date, INTERVAL '1 day')::date AS order_date
+    , customer_id
 FROM my_ducklake.cust_orders;
 
 -- now merge
