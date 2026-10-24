@@ -18,7 +18,7 @@ CALL dl1.set_option('parquet_row_group_size', '10000');
 -- sets ducklake compression global setting
 CALL dl1.set_option('parquet_compression', 'zstd');
 
-CREATE SCHEMA sales;
+CREATE SCHEMA dl1.sales;
 CREATE TABLE dl1.sales.sales_dly (sls_dt date, region_name varchar, sls_amt double);
 
 -- you can go further grain on the compression at a schema or table level if needed
