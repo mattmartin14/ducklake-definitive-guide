@@ -1,24 +1,62 @@
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python
 venv/
 .venv/
 **/.venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+.virtual_documents/
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Node
+**/node_modules/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.tfvars
+!*.tfvars.example
+
+# Terraform
 *.tfstate*
-**/.terraform*
-*.terraform*
-.terraform
-.terraform.lock.hcl
-*.parquet
-*.lineitem
+**/.terraform/
 
 # DuckDB and DuckLake generated data artifacts
-my_duckdb
-my_duckdb-wal
-**/dw/
 *.ducklake
 *.ducklake.wal
-**/node_modules/
-chapter_9/node_examples/*.ducklake
-chapter_9/node_examples/lake_data/
-chapter_9/adbc_examples/*.ducklake
-chapter_9/adbc_examples/lake_data/
+*.duckdb-wal
+my_duckdb
+my_duckdb-wal
+my_duckdb.duckdb
+*.parquet
+!chapter_3/section_4_query_planning/test.parquet
+*.lineitem
+**/dw/
+**/dw*/
+**/*_dw/
+**/ducklake_wh/
+**/tpch/
+**/lake_data/
+chapter_7/monitoring/logs/
+**/query_logs/
 chapter_9/wasm/bi/data/
-chapter_9/wasm/bi/terraform/terraform.tfvars
+
+# Notebook run artifacts
+**/delta_warehouse/
+**/icehouse/
+*.crc
+
+# Manually downloaded jars (chapter 1 GCS connector)
+**/jars/
