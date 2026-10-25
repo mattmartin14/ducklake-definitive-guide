@@ -1,5 +1,5 @@
 # /// script
-# dependencies = ["duckdb",]
+# dependencies = ["duckdb==1.5.4",]
 # ///
 
 # As a pre-requisite, retrieve your MotherDuck token from http://app.motherduck.com/settings/tokens
