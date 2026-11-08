@@ -102,9 +102,14 @@ make logs                    tail tunnel + server logs
   in this book. Terraform only reads it via a data source and scopes IAM
   permissions to the `chapter_9/wasm/*` key prefix — it is never created or
   destroyed by this module.
-- `@duckdb/duckdb-wasm@1.33.1-dev57.0` is pinned because the stable 1.32.0
-  release predates the `quack` extension's WASM build (Quack shipped in
-  DuckDB v1.5.3).
+- DuckDB server and browser are pinned to 1.5.6:
+  `@duckdb/duckdb-wasm@1.33.1-dev65.0` embeds the same DuckDB commit as the
+  1.5.6 GA release. Keep both versions aligned when upgrading either side.
+- Changing the bootstrap template does not update a running EC2 instance.
+  Deploy with `-replace=aws_instance.quack`; this recreates the instance-local
+  DuckLake catalog, so rerun `make tunnel-start` and `make seed-data` before
+  `make start`. The table's S3 data path remains outside the instance.
+- Hard-refresh the browser after changing the pinned WASM version.
 - The demo token (`replace-with-secure-pwd`) lives in both `terraform.tfvars`
   and `app.js` — keep them in sync if you change it, and treat it as a
   low-security shared secret suitable for a book demo, not production.

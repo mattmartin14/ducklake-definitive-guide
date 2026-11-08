@@ -22,8 +22,6 @@ fi
 quack_token="$(terraform -chdir="$terraform_dir" output -raw quack_token)"
 local_port="${LOCAL_PORT:-9494}"
 
-# The generated INSERT is one big multi-row statement; escape single quotes
-# so it can be embedded as a string literal inside remote.query('...').
 insert_sql_escaped="$(sed "s/'/''/g" "$insert_sql_file")"
 
 duckdb :memory: <<SQL

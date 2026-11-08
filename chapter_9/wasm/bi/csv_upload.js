@@ -5,7 +5,7 @@
 // SQL Workbench. This is the "open the CSV in temp space, construct an
 // INSERT" approach: DuckDB-WASM IS the temp space.
 
-import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.33.1-dev57.0";
+import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.33.1-dev65.0";
 
 const REQUIRED_COLUMNS = [
   "region_name",

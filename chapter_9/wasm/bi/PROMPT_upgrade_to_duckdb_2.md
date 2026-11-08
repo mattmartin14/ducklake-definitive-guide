@@ -1,67 +1,49 @@
-# Prompt: upgrade `chapter_9/wasm/bi` to DuckDB 2.0 (alpha) Quack syntax
+# DuckDB 2.0 Quack upgrade notes
 
-Paste or reference this file when a DuckDB-WASM build matching DuckDB 2.0 is published.
+The Regional Sales Portal is currently pinned to DuckDB 1.5.6 on both the EC2
+server and DuckDB-WASM client. Use this file when retrying the DuckDB 2.0
+upgrade after the browser Quack extension issue described in
+[`DUCKDB_WASM_2_0_ISSUE.md`](./DUCKDB_WASM_2_0_ISSUE.md) is resolved.
 
-## Goal
+## Current working versions
 
-Move the Regional Sales Portal in `chapter_9/wasm/bi` from DuckDB 1.5.5 and legacy
-`remote.query('...')` to DuckDB 2.0 alpha, using `CONNECT` / `DISCONNECT` so SQL is no
-longer wrapped in `remote.query()`.
+- Server: DuckDB CLI 1.5.6 GA.
+- Browser: `@duckdb/duckdb-wasm@1.33.1-dev65.0`, whose DuckDB submodule is the
+  1.5.6 GA commit `069cc9f9b5be802405797faecc284961b07c70ef`.
+- Client SQL uses the legacy `remote.query('...')` interface.
 
-## Why it was reverted
+## What blocked the DuckDB 2.0 attempt
 
-- Server on 2.0 alpha plus browser on `@duckdb/duckdb-wasm@1.33.1-dev57.0` failed at
-  init: `Serialization Error: Failed to deserialize: expected end of object, but found field id: 2`.
-- `@duckdb/duckdb-wasm@1.33.1-dev65.0` (newest on npm at the time, dist-tag `next`) was
-  tried and still did not match, so the WASM Quack client was older than the server.
-- Precondition to retry: check `npm view @duckdb/duckdb-wasm dist-tags versions` for a
-  build based on DuckDB 2.0, and pin it in `app.js`, `csv_upload.js` and the README Notes.
+- The DuckDB 2.0.0 server worked with native DuckDB clients: `CONNECT remote`,
+  a query against `dl1.sales_data`, and `DISCONNECT` succeeded.
+- The WASM build `@duckdb/duckdb-wasm@1.33.1-dev114.0` embeds DuckDB 2.0.0
+  commit `d54cbbe3df17e8e5ce68312f483b4155836112aa`.
+- In the browser's default WASM bundle, loading Quack succeeded, but attaching
+  to the server failed with `thread constructor failed: Not supported`.
+- In an explicitly cross-origin-isolated threads bundle, the published
+  `wasm_threads/quack` extension returned HTTP 200 but failed to load into the
+  shared-memory runtime.
+- The browser therefore never reached a successful Quack attachment, so
+  browser-side `CONNECT` / `DISCONNECT`, workbench queries, and CSV uploads
+  were not verified.
+- See the upstream report and workaround investigation at
+  [duckdb/duckdb-wasm#2290](https://github.com/duckdb/duckdb-wasm/issues/2290).
 
-## Reference examples (modern syntax, already working)
+## Reference examples
 
-- `chapter_6/quack/server.sql`: server side. Installs `ducklake`, `quack`, `AWS`;
-  attaches DuckLake; ends with `CALL quack_serve(token => '...')`.
-- `chapter_6/quack/client.sql`: client side. `ATTACH 'quack:host:port' AS qk (TOKEN '...');`
-  then `CONNECT qk;` ... plain SQL against `dl1.*` ... `DISCONNECT;`.
+- `chapter_9/quack/server.sql`: DuckDB 2.0 server-side Quack setup.
+- `chapter_9/quack/client.sql`: DuckDB 2.0 client-side `CONNECT` /
+  `DISCONNECT` syntax.
 
-## Install DuckDB 2.0 alpha
+## Retry checklist
 
-```
-curl https://install.duckdb.org | DUCKDB_VERSION=alpha bash
-```
-
-The installer writes to `$HOME/.duckdb/cli/latest/duckdb`. On EC2 cloud-init set
-`export HOME=/root` first, and symlink the binary to `/usr/local/bin/duckdb`.
-The local CLI used for seeding must also be 2.0 alpha (a 1.5.6 CLI works fine with a
-1.5.5 server, but not with 2.0 syntax).
-
-## Files to change
-
-| File | Change |
-| --- | --- |
-| `terraform/templates/bootstrap.sh.tftpl` | Replace the 1.5.5 zip download (`duckdb_version`/`architecture` block) with the alpha install above; keep `quack_serve(..., token => ..., allow_other_hostname => true)` unless the alpha rejects it. |
-| `workbench.js` | Remove `escapeForRemoteQuery` and the `remote.query('...')` wrapper. Run `CONNECT remote;`, then the SQL, then `DISCONNECT;` (in a `finally`). |
-| `csv_upload.js` | Parse CSV locally first (while NOT connected, since `CONNECT` routes all statements to the server), then `CONNECT remote;` / INSERT / `DISCONNECT;`. Remove `escapeForRemoteQuery`. |
-| `app.js` | Keep `ATTACH 'quack:<host>' AS remote (TOKEN ...)`; update the pinned WASM version and comments. |
-| `scripts/seed_sales_data.sh` | Inside the heredoc: `CONNECT remote;`, the raw `seed_insert.sql` content, the summary query, `DISCONNECT;`. No quote escaping needed. |
-| `index.html`, `README.md` | Replace `remote.query(...)` mentions (architecture diagram, workbench/csv_upload descriptions, WASM pin note). |
-
-## Deploy notes
-
-- `user_data_replace_on_change = false` in `terraform/main.tf`: editing the bootstrap
-  template does NOT affect the running instance. Recreate it
-  (`terraform apply -replace=<aws_instance resource>` or `make destroy && make deploy`).
-- Recreating the instance wipes the DuckLake catalog (`/opt/quack-server/ducklake_metadata.ducklake`),
-  so rerun, in order: `make tunnel-start`, `make seed-data`, `make start`.
-- Hard-refresh the browser (Cmd+Shift+R) after changing the pinned WASM version.
-
-## Verify
-
-1. Table is populated: with the tunnel up, `ATTACH 'quack:localhost:9494' AS remote (TOKEN '<token>'); CONNECT remote; SELECT count(*) FROM dl1.sales_data; DISCONNECT;`
-2. Page loads with no "Initialization failed" banner.
-3. Default workbench query returns rows; chart renders; sample CSV upload adds rows.
-
-## Rollback
-
-Revert to DuckDB 1.5.5 zip download in the bootstrap, `remote.query('...')` wrappers
-with `escapeForRemoteQuery`, and `duckdb-wasm@1.33.1-dev57.0`.
+1. Select a DuckDB-WASM release that embeds the DuckDB 2.0 GA version and has
+   compatible Quack and httpfs WASM extensions for the selected runtime.
+2. Verify browser startup and `ATTACH 'quack:...' AS remote` in both the
+   supported default bundle and any required threaded configuration.
+3. Only after attach succeeds, switch `workbench.js`, `csv_upload.js`, and
+   `scripts/seed_sales_data.sh` from `remote.query(...)` to `CONNECT remote`,
+   plain SQL, and `DISCONNECT`.
+4. Pin the verified WASM version in both `app.js` and `csv_upload.js`.
+5. Deploy the matching DuckDB server version and test browser query, chart, and
+   CSV upload end to end.

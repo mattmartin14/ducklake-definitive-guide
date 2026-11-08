@@ -1,4 +1,4 @@
-import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.33.1-dev57.0";
+import * as duckdb from "https://esm.sh/@duckdb/duckdb-wasm@1.33.1-dev65.0";
 import { initWorkbench } from "./workbench.js";
 import { initChart } from "./chart.js";
 import { initCsvUpload } from "./csv_upload.js";
@@ -12,8 +12,7 @@ function setStatus(text, isError = false) {
 }
 
 async function instantiateDuckDB() {
-  const bundles = duckdb.getJsDelivrBundles();
-  const bundle = await duckdb.selectBundle(bundles);
+  const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
 
   const workerUrl = URL.createObjectURL(
     new Blob([`importScripts("${bundle.mainWorker}");`], {
