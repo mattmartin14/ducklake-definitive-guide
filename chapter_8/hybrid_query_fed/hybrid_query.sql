@@ -13,8 +13,13 @@ INSERT INTO dl1.order_hdr (order_id, cust_name, order_amount) VALUES
 
 INSTALL postgres; LOAD postgres;
 
--- for production workloads, secure the credentials accordingly
-ATTACH 'dbname=matthewmartin user=matthewmartin password=postgres host=127.0.0.1' AS pg (TYPE postgres);
+SET VARIABLE pg_conn_str = 'dbname=' || getenv('PG_DB_NM') 
+    || ' user=' || getenv('PG_DB_USER') 
+    || ' password=' || getenv('PG_DB_PASSWORD') 
+    || ' host=' || getenv('PG_HOST')
+;
+
+ATTACH $pg_conn_str AS pg (TYPE postgres);
 
 SELECT
     o.order_id,

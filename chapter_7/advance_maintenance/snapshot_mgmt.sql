@@ -1,14 +1,14 @@
 .shell rm -f -- "local_inst.ducklake"
 .shell rm -rf -- "./dw"
 
-ATTACH 'ducklake:local_inst.ducklake' as my_ducklake (DATA_PATH './dw', DATA_INLINING_ROW_LIMIT 0);
+ATTACH 'ducklake:local_inst.ducklake' as dl1 (DATA_PATH './dw', DATA_INLINING_ROW_LIMIT 0);
 
-CREATE TABLE my_ducklake.orders (order_id integer, customer_id integer, order_date date);
-INSERT INTO my_ducklake.orders (order_id, customer_id, order_date)
+CREATE TABLE dl1.orders (order_id integer, customer_id integer, order_date date);
+INSERT INTO dl1.orders (order_id, customer_id, order_date)
 VALUES (1, 100, '2024-01-01'), (2, 101, '2024-01-02'), (3, 102, '2024-01-03');
 
 SET TimeZone = 'UTC';                      
-SET VARIABLE catalog       = 'my_ducklake';
+SET VARIABLE catalog       = 'dl1';
 SET VARIABLE max_age_weeks = 26; -- expire older than N weeks before now()
 
 SET VARIABLE versions_to_expire = (
@@ -51,4 +51,4 @@ SET VARIABLE versions_to_expire = (
 );
 
 
-CALL ducklake_expire_snapshots('my_ducklake', versions => getvariable('versions_to_expire'));
+CALL ducklake_expire_snapshots('dl1', versions => getvariable('versions_to_expire'));
