@@ -11,7 +11,8 @@ import psycopg
 
 token = os.environ["motherduck_token"]
 region = "us-east-1-aws.motherduck.com"
-conn_str = f"postgresql://postgres:{token}@pg.{region}:5432/md:?sslmode=verify-full&sslrootcert=system"
+conn_str = f"postgresql://postgres:{token}@pg.{region}:5432/md:?"
+conn_str += "sslmode=verify-full&sslrootcert=system"
 
 with psycopg.connect(conn_str) as conn:
     with conn.cursor() as cur:
