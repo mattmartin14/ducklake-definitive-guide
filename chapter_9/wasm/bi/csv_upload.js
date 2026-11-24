@@ -111,8 +111,15 @@ export function initCsvUpload({ getDb, getConnection }) {
       setStatus(`Inserting ${rows.length} row(s) into dl1.sales_data...`);
 
       const valuesSql = rows.map(rowToValuesTuple).join(",\n  ");
-      const insertSql = `INSERT INTO dl1.sales_data (${REQUIRED_COLUMNS.join(", ")}) VALUES\n  ${valuesSql};`;
-      await conn.query(`SELECT * FROM remote.query('${escapeForRemoteQuery(insertSql)}')`);
+      const insertSql = `
+        INSERT INTO dl1.sales_data (${REQUIRED_COLUMNS.join(", ")}) 
+        VALUES\n  
+          ${valuesSql};
+      `;
+      await conn.query(`
+          SELECT * 
+          FROM remote.query('${escapeForRemoteQuery(insertSql)}')
+      `);
 
       setStatus(`Uploaded ${rows.length} row(s) from "${file.name}" to dl1.sales_data.`);
       fileInputEl.value = "";
