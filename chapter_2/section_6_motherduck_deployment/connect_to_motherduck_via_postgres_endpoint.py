@@ -1,5 +1,5 @@
 # /// script
-# dependencies = ["psycopg",]
+# dependencies = ["psycopg[binary]",]
 # ///
 
 # As a pre-requisite, retrieve your MotherDuck token from http://app.motherduck.com/settings/tokens
